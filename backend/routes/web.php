@@ -24,4 +24,6 @@ Route::prefix("admin")->group(function(){
     Route::post('/mountain/update/{id}',[MountainController::class,'update']);
 });
 Route::post('/login', [AuthController::class, 'login']);
+Route::get('/user', [AuthController::class, 'getUserFromToken'])->middleware('auth:sanctum');
 Route::post('/register', [AuthController::class, 'register']);
+

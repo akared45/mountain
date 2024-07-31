@@ -51,7 +51,15 @@ const Login = (username, password_hash) => {
         password_hash
     })
 }
-const Register = (username, password_hash,full_name,email) => {
+
+const InforUser = (token) => {
+    return axios.get('/user', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  };
+const Register = (username, password_hash, full_name, email) => {
     return axios.post('/register', {
         username,
         password_hash,
@@ -60,4 +68,4 @@ const Register = (username, password_hash,full_name,email) => {
     })
 }
 
-export { showMountain, addMountain, deleteMountain, updateMountain, Login ,Register};
+export { showMountain, addMountain, deleteMountain, updateMountain, Login, Register, InforUser };

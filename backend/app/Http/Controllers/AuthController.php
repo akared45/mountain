@@ -29,7 +29,20 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $tokenResult->plainTextToken,
             'token_type' => 'Bearer',
+        ]);
+    }
+
+    public function getUserFromToken(Request $request)
+    {
+        $user = $request->user();
+
+        return response()->json([
+            'username' => $user->username,
+            'email' => $user->email,
             'role' => $user->role,
+            'full_name'=>$user->full_name,
+            'gender'=>$user->gender,
+            'img'=>$user->img
         ]);
     }
 
@@ -57,7 +70,6 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token->plainTextToken,
             'token_type' => 'Bearer',
-            'role' =>'user',
         ]);
     }
 }

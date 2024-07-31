@@ -62,10 +62,9 @@ const TableGroup = () => {
                         <th scope="col">Longtitude</th>
                         <th scope="col">Latitude</th>
                         <th scope="col">Altitude</th>
-                        <th scope="col">Description</th>
                         <th scope="col">Country</th>
                         <th scope="col">Region</th>
-                        <th scope="col">Img</th>
+                        <th scope="col" width="10%">Img</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -77,7 +76,6 @@ const TableGroup = () => {
                             <td className="text-start align-middle">{item.longitude}</td>
                             <td className="text-start align-middle">{item.latitude}</td>
                             <td className="text-start align-middle">{item.altitude}</td>
-                            <td className="text-start align-middle">{item.description}</td>
                             <td className="text-start align-middle">{item.country}</td>
                             <td className="text-start align-middle">{item.region}</td>
                             <td className="text-start align-middle">
@@ -85,7 +83,7 @@ const TableGroup = () => {
                                     <img
                                         src={`http://localhost:8000/storage/images/${item.img}`}
                                         alt={item.name}
-                                        style={{ maxWidth: '100%', height: '20vh' }}
+                                        style={{ width: '100%' }}
                                     />
                                 ) : (
                                     <span>No Image</span>

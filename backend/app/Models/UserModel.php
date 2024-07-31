@@ -19,6 +19,5 @@ class UserModel extends Authenticatable
         'password_hash',
         'full_name',
         'email',
-
     ];
 }

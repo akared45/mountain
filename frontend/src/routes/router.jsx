@@ -8,16 +8,14 @@ import Contact from '../components/contact/Contact';
 import Group from '../components/group/Group';
 import Mountain from '../components/mountain/Mountain';
 import Blog from '../components/Blog/Blog';
-import User from '../components/User/User';
 import TableUser from '../components/admin/User/TableUser';
 import TableGroup from '../components/admin/Group/TableGroup';
 import TableMountain from '../components/admin/Mountain/TableMountain';
 import HomeAdmin from '../components/admin/Dashboard/HomeAdmin';
 import LoginForm from '../components/User/Login';
 import RegisterForm from '../components/User/Register';
-
-
-
+import Profile from '../components/User/Profile';
+import Footer from '../components/header_footer/Footer/Footer';
 const RouterApp = () => {
   return (
     <>
@@ -37,11 +35,12 @@ const RouterApp = () => {
           <Route path="/group" element={<Group />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<Notfound />} />
         </Routes>
-
+      <Footer/>
       </BrowserRouter>
     </>
   );

@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 import { Register } from '../../services/api';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 const RegisterForm = () => {
     const [fullname, setFullname] = useState('');
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let res= await Register(fullname,username,email,password);
-        if (res && res.data && res.data.access_token){
-            localStorage.setItem("token",res.data.access_token);
+        let res = await Register(username, password, fullname, email);
+        if (res && res.data && res.data.access_token) {
+            localStorage.setItem("token", res.data.access_token);
+            toast.success("Register success");
+            navigate("/");
         }
-        
     };
 
     return (
@@ -25,18 +28,7 @@ const RegisterForm = () => {
                         </div>
                         <div className="card-body">
                             <form>
-                                <div className="mb-3">
-                                    <label htmlFor="fullname" className="form-label">
-                                        Fullname
-                                    </label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        id="fullname"
-                                        value={fullname}
-                                        onChange={(e) => setFullname(e.target.value)}
-                                    />
-                                </div>
+
                                 <div className="mb-3">
                                     <label htmlFor="username" className="form-label">
                                         Username
@@ -47,18 +39,6 @@ const RegisterForm = () => {
                                         id="username"
                                         value={username}
                                         onChange={(e) => setUsername(e.target.value)}
-                                    />
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="email" className="form-label">
-                                        Email
-                                    </label>
-                                    <input
-                                        type="email"
-                                        className="form-control"
-                                        id="email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -73,6 +53,31 @@ const RegisterForm = () => {
                                         onChange={(e) => setPassword(e.target.value)}
                                     />
                                 </div>
+                                <div className="mb-3">
+                                    <label htmlFor="fullname" className="form-label">
+                                        Fullname
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="fullname"
+                                        value={fullname}
+                                        onChange={(e) => setFullname(e.target.value)}
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="email" className="form-label">
+                                        Email
+                                    </label>
+                                    <input
+                                        type="email"
+                                        className="form-control"
+                                        id="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                    />
+                                </div>
+
                                 <button className="btn btn-primary" onClick={handleSubmit}>
                                     Register
                                 </button>

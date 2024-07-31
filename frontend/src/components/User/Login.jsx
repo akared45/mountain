@@ -3,25 +3,33 @@ import { Login } from '../../services/api';
 import { ToastContainer, toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 const LoginForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigate=useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    let res = await Login(username, password);
-    // console.log(res);
-    if (res && res.data && res.data.access_token) {
-      localStorage.setItem("token", res.data.access_token);
-      alert("Success")
-    } else {
-      if (res.status === 401 || res.status===422) {
-        toast.error(res.data.error);
+    try {
+      const res = await Login(username, password);
+      if (res && res.data && res.data.access_token) {
+        localStorage.setItem("token", res.data.access_token);
+        toast.success("Log in success");
+        navigate("/");
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        toast.error("The provided credentials are incorrect.");
+      } else {
+        toast.error("An error occurred. Please try again.");
       }
     }
     setLoading(false);
   };
+
 
   return (
     <div className="container my-5">

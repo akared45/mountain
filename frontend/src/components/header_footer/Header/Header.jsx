@@ -1,10 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
-import { Link } from "react-router-dom"; 
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../assets/images/logo.jpg";
 import "../../../style/Header.css";
+import { toast } from "react-toastify";
+import { InforUser } from "../../../services/api";
 
 const Header = () => {
+  const navigate = useNavigate();
+  const [userRole, setUserRole] = useState(null);
+  const [username, setUserName] = useState(null);
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    if (token) {
+      const fetchUserInfo = async () => {
+        try {
+          const response = await InforUser(token);
+          setUserName(response.data.username);
+          setUserRole(response.data.role);
+        } catch (error) {
+          console.error('Failed to fetch user info:', error);
+          toast.error('Failed to fetch user info.');
+        }
+      };
+      fetchUserInfo();
+    }
+  }, [token]);
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+    toast.success("Log out success");
+  };
+
   return (
     <header>
       <Navbar expand="lg" className="justify-content-between">
@@ -22,16 +50,27 @@ const Header = () => {
           <Navbar.Collapse>
             <Nav>
               <Nav.Link as={Link} to="/">Home</Nav.Link>
-              <Nav.Link as={Link} to="/mountains">Mounterring</Nav.Link>
+              <Nav.Link as={Link} to="/mountains">Mountaineering</Nav.Link>
               <Nav.Link as={Link} to="/group">Group</Nav.Link>
               <Nav.Link as={Link} to="/blog">Blog</Nav.Link>
-              <Nav.Link as={Link} to="/about">About us</Nav.Link>
+              <Nav.Link as={Link} to="/about">About Us</Nav.Link>
               <Nav.Link as={Link} to="/contact">Contact</Nav.Link>
             </Nav>
-            <NavDropdown title="User" id="basic-nav-dropdown">
-              <NavDropdown.Item as={Link} to="/login">Log in</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/register">Register</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/admin">Admin</NavDropdown.Item>
+            <NavDropdown title={token ? username : "Account"} id="basic-nav-dropdown">
+              {!token ? (
+                <>
+                  <NavDropdown.Item as={Link} to="/login">Log in</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/register">Register</NavDropdown.Item>
+                </>
+              ) : (
+                <>
+                  <NavDropdown.Item as={Link} to="/" onClick={handleLogout}>Logout</NavDropdown.Item>
+                  {userRole === 'admin' && (
+                    <NavDropdown.Item as={Link} to="/admin">Admin</NavDropdown.Item>
+                  )}
+                  <NavDropdown.Item as={Link} to="/profile">Profile</NavDropdown.Item>
+                </>
+              )}
             </NavDropdown>
           </Navbar.Collapse>
         </Container>
