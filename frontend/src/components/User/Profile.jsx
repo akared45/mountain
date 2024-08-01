@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { updateProfile, InforUser } from '../../services/api';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ModalPass from './ModalPass';
 
@@ -31,8 +31,7 @@ const Profile = () => {
           setUserInfoImg(data.img);
           setUserInfoAddress(data.address);
           setUserInfoDob(data.dob);
-        } catch (error) {
-          console.error('Failed to fetch user info:', error);
+        } catch {
           toast.error('Failed to fetch user info.');
         }
       };
@@ -48,12 +47,10 @@ const Profile = () => {
 
   const handleEditProfile = async () => {
     try {
-      console.log(userInfoDob);
       let res = await updateProfile(userInfoId, userInfoName, userInfoEmail, userInfoGender, userInfoImg, userInfoDob, userInfoAddress);
       toast.success("Edit success");
       setIsEditing(false);
-    } catch (error) {
-      console.error('Failed to update profile:', error);
+    } catch {
       toast.error('Failed to update profile. Please check the console for details.');
     }
   };
@@ -62,7 +59,6 @@ const Profile = () => {
   }
   return (
     <div className="container my-5">
-      <ToastContainer />
       <div className="row justify-content-center">
         <div className="col-md-8">
           <div className="card">
