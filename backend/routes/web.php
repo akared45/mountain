@@ -26,5 +26,6 @@ Route::prefix("admin")->group(function(){
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/user', [AuthController::class, 'getUserFromToken'])->middleware('auth:sanctum');
 Route::post('/user/update/{id}', [AuthController::class, 'updateUser']);
+Route::post('/user/changepass/{id}', [AuthController::class, 'changePass']);
 Route::post('/register', [AuthController::class, 'register']);
 

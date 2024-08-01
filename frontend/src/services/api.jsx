@@ -67,9 +67,8 @@ const Register = (username, password_hash, full_name, email) => {
         email
     })
 }
-const updateProfile = (id, password_hash, full_name, email, gender, img, dob, address) => {
+const updateProfile = (id, full_name, email, gender, img, dob, address) => {
     let formData = new FormData();
-    formData.append('password_hash', password_hash);
     formData.append('full_name', full_name);
     formData.append('email', email);
     formData.append('gender', gender);
@@ -79,10 +78,14 @@ const updateProfile = (id, password_hash, full_name, email, gender, img, dob, ad
         formData.append('img', img);
     }
     return axios.post(`/user/update/${id}`, formData, {
-
         headers: {
             'Content-Type': 'multipart/form-data',
         },
     });
 };
-export { showMountain, addMountain, deleteMountain, updateMountain, Login, Register, InforUser, updateProfile };
+const changePass = (id, newpassword) => {
+    return axios.post(`user/changepass/${id}`, {
+        newpassword
+    });
+}
+export { showMountain, addMountain, deleteMountain, updateMountain, Login, Register, InforUser, updateProfile, changePass };

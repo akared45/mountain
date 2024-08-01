@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { updateProfile, InforUser } from '../../services/api';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ModalPass from './ModalPass';
 
 const Profile = () => {
   const [userInfoId, setUserInfoId] = useState("");
@@ -13,7 +14,7 @@ const Profile = () => {
   const [userInfoAddress, setUserInfoAddress] = useState("");
   const [userInfoDob, setUserInfoDob] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-
+  const [ModalShowPass, setModalShowPass] = useState(false);
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -48,7 +49,7 @@ const Profile = () => {
   const handleEditProfile = async () => {
     try {
       console.log(userInfoDob);
-      let res = await updateProfile(userInfoId, userInfoPassword, userInfoName, userInfoEmail, userInfoGender, userInfoImg, userInfoDob,userInfoAddress );
+      let res = await updateProfile(userInfoId, userInfoName, userInfoEmail, userInfoGender, userInfoImg, userInfoDob, userInfoAddress);
       toast.success("Edit success");
       setIsEditing(false);
     } catch (error) {
@@ -56,7 +57,9 @@ const Profile = () => {
       toast.error('Failed to update profile. Please check the console for details.');
     }
   };
-
+  const handleClose = () => {
+    setModalShowPass(false);
+  }
   return (
     <div className="container my-5">
       <ToastContainer />
@@ -177,7 +180,10 @@ const Profile = () => {
                         Edit Profile
                       </button>
                     )}
-                    <button type="button" className="btn btn-secondary">Change Password</button>
+                    <button type="button" className="btn btn-secondary" onClick={() => setModalShowPass(true)}>
+                      Change Password
+                    </button>
+                    <ModalPass show={ModalShowPass} handleClose={handleClose} userInfoPassword={userInfoPassword} userInfoId={userInfoId}/>
                   </div>
                 </div>
               </div>

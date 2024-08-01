@@ -38,15 +38,16 @@ class AuthController extends Controller
         $user = $request->user();
 
         return response()->json([
-            'id'=>$user->id,
+            'id' => $user->id,
             'username' => $user->username,
+            'password_hash' => $user->password_hash,
             'email' => $user->email,
             'role' => $user->role,
-            'full_name'=>$user->full_name,
-            'gender'=>$user->gender,
-            'img'=>$user->img,
-            'address'=>$user->address,
-            'dob'=>$user->dob,
+            'full_name' => $user->full_name,
+            'gender' => $user->gender,
+            'img' => $user->img,
+            'address' => $user->address,
+            'dob' => $user->dob,
         ]);
     }
 
@@ -82,7 +83,6 @@ class AuthController extends Controller
         if (!$user) {
             return response()->json(['message' => 'User not found.'], 404);
         }
-        $password_hash = $request->input('password_hash');
         $full_name = $request->input('full_name');
         $email = $request->input('email');
         $gender = $request->input('gender');
@@ -93,12 +93,11 @@ class AuthController extends Controller
         DB::table('users')
             ->where('id', $id)
             ->update([
-                'password_hash' => $password_hash,
                 'full_name' => $full_name,
                 'email' => $email,
                 'gender' => $gender,
-                'address'=>$address,
-                'dob'=>$dob,
+                'address' => $address,
+                'dob' => $dob,
             ]);
 
         if ($request->hasFile('img')) {
@@ -112,9 +111,27 @@ class AuthController extends Controller
         }
 
         $UserInfo = DB::table('users')
-            ->select('id', 'password_hash', 'full_name', 'email', 'gender', 'img' ,'address','dob')
+            ->select('id', 'full_name', 'email', 'gender', 'img', 'address', 'dob')
             ->get();
 
         return response()->json(['UserInfo' => $UserInfo]);
+    }
+    public function changePass($id, Request $request)
+    {
+        $user = DB::table('users')->where('id', $id)->first();
+        if (!$user) {
+            return response()->json(['message' => 'User not found.'], 404);
+        }
+
+        $newPassword = $request->input('newpassword');
+        if (!$newPassword) {
+            return response()->json(['message' => 'New password is required.'], 400);
+        }
+
+        DB::table('users')
+            ->where('id', $id)
+            ->update(['password_hash' => $newPassword]);
+
+        return response()->json(['message' => 'Password updated successfully.']);
     }
 }
