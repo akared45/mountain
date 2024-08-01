@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\UserModel;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -37,12 +38,15 @@ class AuthController extends Controller
         $user = $request->user();
 
         return response()->json([
+            'id'=>$user->id,
             'username' => $user->username,
             'email' => $user->email,
             'role' => $user->role,
             'full_name'=>$user->full_name,
             'gender'=>$user->gender,
-            'img'=>$user->img
+            'img'=>$user->img,
+            'address'=>$user->address,
+            'dob'=>$user->dob,
         ]);
     }
 
@@ -71,5 +75,46 @@ class AuthController extends Controller
             'access_token' => $token->plainTextToken,
             'token_type' => 'Bearer',
         ]);
+    }
+    public function updateUser($id, Request $request)
+    {
+        $user = DB::table('users')->where('id', $id)->first();
+        if (!$user) {
+            return response()->json(['message' => 'User not found.'], 404);
+        }
+        $password_hash = $request->input('password_hash');
+        $full_name = $request->input('full_name');
+        $email = $request->input('email');
+        $gender = $request->input('gender');
+        $address = $request->input('address');
+        $dob = $request->input('dob');
+
+
+        DB::table('users')
+            ->where('id', $id)
+            ->update([
+                'password_hash' => $password_hash,
+                'full_name' => $full_name,
+                'email' => $email,
+                'gender' => $gender,
+                'address'=>$address,
+                'dob'=>$dob,
+            ]);
+
+        if ($request->hasFile('img')) {
+            $image = $request->file('img');
+            $imageName = $image->getClientOriginalName();
+            $image->storeAs('public/images', $imageName);
+
+            DB::table('users')
+                ->where('id', $id)
+                ->update(['img' => $imageName]);
+        }
+
+        $UserInfo = DB::table('users')
+            ->select('id', 'password_hash', 'full_name', 'email', 'gender', 'img' ,'address','dob')
+            ->get();
+
+        return response()->json(['UserInfo' => $UserInfo]);
     }
 }

@@ -17,6 +17,7 @@ const LoginForm = () => {
       const res = await Login(username, password);
       if (res && res.data && res.data.access_token) {
         localStorage.setItem("token", res.data.access_token);
+        console.log(res.data);
         toast.success("Log in success");
         navigate("/");
       }

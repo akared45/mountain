@@ -54,11 +54,11 @@ const Login = (username, password_hash) => {
 
 const InforUser = (token) => {
     return axios.get('/user', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
     });
-  };
+};
 const Register = (username, password_hash, full_name, email) => {
     return axios.post('/register', {
         username,
@@ -67,5 +67,22 @@ const Register = (username, password_hash, full_name, email) => {
         email
     })
 }
+const updateProfile = (id, password_hash, full_name, email, gender, img, dob, address) => {
+    let formData = new FormData();
+    formData.append('password_hash', password_hash);
+    formData.append('full_name', full_name);
+    formData.append('email', email);
+    formData.append('gender', gender);
+    formData.append('dob', dob);
+    formData.append('address', address);
+    if (img) {
+        formData.append('img', img);
+    }
+    return axios.post(`/user/update/${id}`, formData, {
 
-export { showMountain, addMountain, deleteMountain, updateMountain, Login, Register, InforUser };
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    });
+};
+export { showMountain, addMountain, deleteMountain, updateMountain, Login, Register, InforUser, updateProfile };
