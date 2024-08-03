@@ -1,6 +1,5 @@
 import React from "react";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import "./SideBar.css";
 import { NavLink } from "react-router-dom";
 
 const SideBar = () => {
@@ -13,10 +12,9 @@ const SideBar = () => {
       <hr className="text-dark" />
       <div className="list-group list-group-flush">
         <NavLink
-          to="/admin"
+          to="/admin/dashboard"
           className={({ isActive }) =>
-            `list-group-item list-group-item-action my-2 ${
-              isActive ? "active" : ""
+            `list-group-item list-group-item-action my-2 ${isActive ? "active" : ""
             }`
           }
         >
@@ -24,21 +22,9 @@ const SideBar = () => {
           <span>Dashboard</span>
         </NavLink>
         <NavLink
-          to="/admin/homeadmin"
-          className={({ isActive }) =>
-            `list-group-item list-group-item-action my-2 ${
-              isActive ? "active" : ""
-            }`
-          }
-        >
-          <i className="bi bi-house fs-4 me-3"></i>
-          <span>Home</span>
-        </NavLink>
-        <NavLink
           to="/admin/mountain"
           className={({ isActive }) =>
-            `list-group-item list-group-item-action my-2 ${
-              isActive ? "active" : ""
+            `list-group-item list-group-item-action my-2 ${isActive ? "active" : ""
             }`
           }
         >
@@ -48,8 +34,7 @@ const SideBar = () => {
         <NavLink
           to="/admin/group"
           className={({ isActive }) =>
-            `list-group-item list-group-item-action my-2 ${
-              isActive ? "active" : ""
+            `list-group-item list-group-item-action my-2 ${isActive ? "active" : ""
             }`
           }
         >
@@ -59,25 +44,14 @@ const SideBar = () => {
         <NavLink
           to="/admin/user"
           className={({ isActive }) =>
-            `list-group-item list-group-item-action my-2 ${
-              isActive ? "active" : ""
+            `list-group-item list-group-item-action my-2 ${isActive ? "active" : ""
             }`
           }
         >
           <i className="bi-person fs-4 me-3"></i>
           <span>User</span>
         </NavLink>
-        <NavLink
-          to="/logout"
-          className={({ isActive }) =>
-            `list-group-item list-group-item-action my-2 ${
-              isActive ? "active" : ""
-            }`
-          }
-        >
-          <i className="bi-box-arrow-right fs-4 me-3"></i>
-          <span>Log out</span>
-        </NavLink>
+
       </div>
     </div>
   );

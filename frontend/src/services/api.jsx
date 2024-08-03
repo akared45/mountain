@@ -38,29 +38,36 @@ const updateMountain = (id, name, description, latitude, longitude, altitude, co
     if (image) {
         formData.append('image', image);
     }
-    return axios.post(`/admin/mountain/update/${id}`, formData, {
+    return axios.post(`admin/mountain/update/${id}`, formData, {
         headers: {
             'Content-Type': 'multipart/form-data',
         },
     });
 };
-
+const ListUser = () => {
+    return axios.get('users');
+}
+const changeRole=(id,role)=>{
+    return axios.post('updateRole',
+        role
+    )
+}
 const Login = (username, password_hash) => {
-    return axios.post('/login', {
+    return axios.post('login', {
         username,
         password_hash
     })
 }
 
 const InforUser = (token) => {
-    return axios.get('/user', {
+    return axios.get('user', {
         headers: {
             Authorization: `Bearer ${token}`,
         },
     });
 };
 const Register = (username, password_hash, full_name, email) => {
-    return axios.post('/register', {
+    return axios.post('register', {
         username,
         password_hash,
         full_name,
@@ -77,7 +84,7 @@ const updateProfile = (id, full_name, email, gender, img, dob, address) => {
     if (img) {
         formData.append('img', img);
     }
-    return axios.post(`/user/update/${id}`, formData, {
+    return axios.post(`user/update/${id}`, formData, {
         headers: {
             'Content-Type': 'multipart/form-data',
         },
@@ -88,4 +95,26 @@ const changePass = (id, newpassword) => {
         newpassword
     });
 }
-export { showMountain, addMountain, deleteMountain, updateMountain, Login, Register, InforUser, updateProfile, changePass };
+
+const count = () => {
+    return axios.get('count')
+}
+
+const ListGroup=()=>{
+    return axios.get('group')
+}
+export {
+    showMountain,
+    addMountain,
+    deleteMountain,
+    updateMountain,
+    Login,
+    Register,
+    InforUser,
+    updateProfile,
+    changePass,
+    count,
+    ListUser,
+    changeRole,
+    ListGroup
+};

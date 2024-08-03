@@ -20,6 +20,8 @@ const LoginForm = () => {
         console.log(res.data);
         toast.success("Log in success");
         navigate("/");
+      }else{
+        toast.error("Log in failed")
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {

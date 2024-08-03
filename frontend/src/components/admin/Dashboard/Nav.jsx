@@ -14,26 +14,6 @@ const Nav = ({Toggle}) => {
             ><i className='bi bi-justify'></i>
                 <span className="navbar-toggler-icon"></span>
             </button>
-            {/* <div className="collapse navbar-collapse" id="navbarNav">
-                <ul className="navbar-nav ms-auto mt-2 mt-lg-0">
-                    <li className="nav-item dropdown">
-                        <a
-                            className="nav-link dropdown-toggle"
-                            href="#"
-                            id="navbarDropdown"
-                            role="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                        >
-                            You
-                        </a>
-                        <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a className="dropdown-item" href="#">Profile</a>
-                            <a className="dropdown-item" href="#">Setting</a>
-                        </div>
-                    </li>
-                </ul>
-            </div> */}
         </nav>
     );
 }

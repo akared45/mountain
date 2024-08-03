@@ -9,7 +9,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('success_stories', function (Blueprint $table) {
-            $table->id(); // 'id' column is unsignedBigInteger by default
+            $table->id();
             $table->string('title', 255);
             $table->text('content');
             $table->foreignId('author_id')->constrained('users')->onDelete('cascade');

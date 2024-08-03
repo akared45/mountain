@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import "./Home.css";
+import "../../style/Home.css";
 import i1 from "../../assets/images/acon.png";
 import i2 from "../../assets/images/denali.png";
 import i3 from "../../assets/images/hima.png";
 import im1 from "../../assets/images/i1.png";
 import im2 from "../../assets/images/i2.png";
-import Footer from "../header_footer/Footer/Footer";
 
 const images = [i1, i2, i3];
 
@@ -15,9 +14,8 @@ const Home = () => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 2000); // Change image every 2 seconds
-
-    return () => clearInterval(intervalId); // Cleanup on unmount
+    }, 2000); 
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
@@ -95,7 +93,6 @@ const Home = () => {
           </div>
         </main>
       </div>
-      <Footer/>
     </>
   );
 };

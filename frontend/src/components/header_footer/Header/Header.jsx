@@ -26,6 +26,7 @@ const Header = () => {
       };
       fetchUserInfo();
     }
+    
   }, [token]);
   const handleLogout = () => {
     localStorage.removeItem("token");

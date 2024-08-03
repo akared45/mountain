@@ -9,14 +9,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('mountain', function (Blueprint $table) {
-            $table->id(); // 'id' column is unsignedBigInteger by default
-            $table->string('name', 100);
-            $table->text('description')->nullable();
-            $table->decimal('latitude', 10, 6)->nullable();
-            $table->decimal('longitude', 10, 6)->nullable();
-            $table->integer('altitude')->nullable();
-            $table->string('country', 100)->nullable();
-            $table->string('region', 100)->nullable();
+            $table->id();
+            $table->string('name', 100)->unique();
+            $table->text('description');
+            $table->decimal('latitude', 10, 6);
+            $table->decimal('longitude', 10, 6);
+            $table->integer('altitude');
+            $table->string('country', 100);
+            $table->string('region', 100);
             $table->string('img', 100)->nullable();
         });
     }

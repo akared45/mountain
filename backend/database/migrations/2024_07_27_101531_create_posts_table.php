@@ -9,7 +9,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('posts', function (Blueprint $table) {
-            $table->id(); // 'id' column is unsignedBigInteger by default
+            $table->id();
             $table->string('title', 255);
             $table->text('content');
             $table->enum('category', ['History', 'Types/Styles', 'Techniques', 'Sheltering', 'Hazards']);

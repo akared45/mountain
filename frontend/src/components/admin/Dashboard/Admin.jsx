@@ -1,35 +1,58 @@
 import React, { useEffect, useState } from "react";
 import SideBar from "./SideBar";
-import "./SideBar.css"
+import "../../../style/SideBar.css";
 import { Outlet, useNavigate } from "react-router-dom";
 import Nav from "./Nav";
 import { toast } from "react-toastify";
+import { InforUser } from "../../../services/api";
+
 const Admin = () => {
     const [toggle, setToggle] = useState(true);
-    const Toggle = () => {
-        setToggle(!toggle);
-    }
+    const [userRole, setUserRole] = useState("");
     const navigate = useNavigate();
-    const userRole = localStorage.getItem("role");
+    const token = localStorage.getItem("token");
+
+    const Toggle = () => {
+        setToggle(prevToggle => !prevToggle);
+    }
 
     useEffect(() => {
-        if (userRole !== 'admin') {
+        const fetchUserInfo = async () => {
+            if (token) {
+                try {
+                    const response = await InforUser(token);
+                    setUserRole(response.data.role);
+                } catch (error) {
+                    console.error('Failed to fetch user info:', error);
+                    toast.error('Failed to fetch user info.');
+                }
+            }
+        };
+        fetchUserInfo();
+    }, [token]);
+
+    useEffect(() => {
+        if (userRole && userRole !== 'admin') {
             toast.error("You are not authorized to access this page.");
             navigate("/");
         }
-    }, [navigate, userRole]);
+    }, [userRole, navigate]);
+
     return (
         <div className="container-fluid bg-white min-vh-100">
             <div className="row">
-                {toggle && <div className="col-2 bg-white vh-100">
-                    <SideBar></SideBar>
-                </div>}
+                {toggle && (
+                    <div className="col-2 bg-white vh-100">
+                        <SideBar />
+                    </div>
+                )}
                 <div className="col">
-                    <Nav Toggle={Toggle}></Nav>
+                    <Nav Toggle={Toggle} />
                     <Outlet />
                 </div>
             </div>
         </div>
-    )
+    );
 }
+
 export default Admin;

@@ -1,0 +1,13 @@
+.group-item{
+    background-color: rgb(184, 184, 184);
+    border-radius: 5px;
+}
+.half-star {
+    border: 1px solid #ffd700;
+    color: transparent;
+  }
+  
+  .full-star {
+    color: #ffd700;
+  }
+  
