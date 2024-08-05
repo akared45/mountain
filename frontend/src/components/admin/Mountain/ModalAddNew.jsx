@@ -112,7 +112,7 @@ const ModalAddNew = ({ show, handleClose, setListMountain }) => {
 
   return (
     <>
-      <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
+      <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Thêm Núi Mới</Modal.Title>
         </Modal.Header>

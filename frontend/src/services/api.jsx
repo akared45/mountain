@@ -47,7 +47,7 @@ const updateMountain = (id, name, description, latitude, longitude, altitude, co
 const ListUser = () => {
     return axios.get('users');
 }
-const changeRole=(id,role)=>{
+const changeRole = (id, role) => {
     return axios.post('updateRole',
         role
     )
@@ -100,8 +100,19 @@ const count = () => {
     return axios.get('count')
 }
 
-const ListGroup=()=>{
-    return axios.get('group')
+const ListGroups = () => {
+    return axios.get('groups')
+}
+
+const GroupComment = (id) => {
+    return axios.get(`groups/comments/${id}`)
+}
+
+const UserComment = (groupid, userid, content, rating) => {
+    return axios.post(`groups/${groupid}/user/${userid}/comment`, {
+        content,
+        rating
+    })
 }
 export {
     showMountain,
@@ -116,5 +127,7 @@ export {
     count,
     ListUser,
     changeRole,
-    ListGroup
+    ListGroups,
+    GroupComment,
+    UserComment
 };

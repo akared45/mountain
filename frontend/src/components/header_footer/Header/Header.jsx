@@ -10,6 +10,7 @@ const Header = () => {
   const navigate = useNavigate();
   const [userRole, setUserRole] = useState(null);
   const [username, setUserName] = useState(null);
+  const [avatarUrl, setAvatarUrl] = useState(null);
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -19,6 +20,8 @@ const Header = () => {
           const response = await InforUser(token);
           setUserName(response.data.username);
           setUserRole(response.data.role);
+          setAvatarUrl(response.data.img);
+          console.log(avatarUrl)
         } catch (error) {
           console.error('Failed to fetch user info:', error);
           toast.error('Failed to fetch user info.');
@@ -26,7 +29,7 @@ const Header = () => {
       };
       fetchUserInfo();
     }
-    
+
   }, [token]);
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -57,7 +60,12 @@ const Header = () => {
               <Nav.Link as={Link} to="/about">About Us</Nav.Link>
               <Nav.Link as={Link} to="/contact">Contact</Nav.Link>
             </Nav>
-            <NavDropdown title={token ? username : "Account"} id="basic-nav-dropdown">
+            <NavDropdown title={token ?
+              <img
+                src={avatarUrl ? `http://localhost:8000/storage/images/${avatarUrl}` : 'http://localhost:8000/storage/images/avtdefault.jpg'}
+                alt="avatar"
+                style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+              /> : "Account"} id="basic-nav-dropdown">
               {!token ? (
                 <>
                   <NavDropdown.Item as={Link} to="/login">Log in</NavDropdown.Item>

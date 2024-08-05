@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\UserModel;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -17,7 +18,7 @@ class AuthController extends Controller
 
         $user = UserModel::where('username', $req->username)->first();
 
-        if (!$user || $user->password_hash !== $req->password_hash) {
+        if (!$user || !Hash::check($req->password, $user->password_hash)) {
             return response()->json([
                 'message' => 'The provided credentials are incorrect.',
             ], 401);
@@ -60,9 +61,11 @@ class AuthController extends Controller
             'password_hash' => 'required',
         ]);
 
+        $password_hash = Hash::make($validatedData['password_hash']);
+
         $user = UserModel::create([
             'username' => $validatedData['username'],
-            'password_hash' => $validatedData['password_hash'],
+            'password_hash' => $password_hash,
             'full_name' => $validatedData['full_name'],
             'email' => $validatedData['email'],
             'role' => 'user',

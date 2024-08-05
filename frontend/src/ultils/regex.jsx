@@ -6,3 +6,6 @@ export const altitudeRegex = /^\d+(\.\d{1,2})?$/;
 export const countryRegex = /^[a-zA-Z\s]{3,}$/;
 export const regionRegex = /^[a-zA-Z\s-]{3,}$/;
 
+export const nameRegex = /^[A-Za-z\s]+$/;
+export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+export const addressRegex = /^[A-Za-z0-9\s,.-]+$/;

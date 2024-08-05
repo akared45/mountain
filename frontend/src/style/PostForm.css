@@ -93,11 +93,11 @@
     color: #333;
   }
   
-  label {
+  /* label {
     margin: 10px 0;
     color: #343232;
   }
-  
+   */
   input[type="text"],
   input[type="email"],
   input[type="tel"],

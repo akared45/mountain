@@ -38,7 +38,9 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::get('/users', [UserController::class, 'show']);
 Route::post('/user/role/{id}', [UserController::class, 'updateRole']);
 
-Route::get('/group',[CommentController::class,'show']);
+Route::get('/groups', [CommentController::class, 'showGroups']);
+Route::get('/groups/comments/{id}', [CommentController::class, 'showGroupComments']);
+Route::post('/groups/{groupid}/user/{userid}/comment', [CommentController::class, 'postComment']);
 
 Route::get('/count', [CountController::class, 'count']);
 
