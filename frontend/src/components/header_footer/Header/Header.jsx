@@ -21,7 +21,7 @@ const Header = () => {
           setUserName(response.data.username);
           setUserRole(response.data.role);
           setAvatarUrl(response.data.img);
-          console.log(avatarUrl)
+          
         } catch (error) {
           console.error('Failed to fetch user info:', error);
           toast.error('Failed to fetch user info.');

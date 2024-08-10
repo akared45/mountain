@@ -114,6 +114,21 @@ const UserComment = (groupid, userid, content, rating) => {
         rating
     })
 }
+const UpdateUserComment = (commentid, content, rating) => {
+    return axios.post(`comments/${commentid}`, {
+        content,
+        rating
+    })
+}
+const DeleteUserComment = (commentid) => {
+    return axios.delete(`comments/${commentid}`)
+}
+const listCategory = () => {
+    return axios.get('blog/category')
+}
+const listPosts = () => {
+    return axios.get('blog')
+}
 export {
     showMountain,
     addMountain,
@@ -129,5 +144,9 @@ export {
     changeRole,
     ListGroups,
     GroupComment,
-    UserComment
+    UserComment,
+    UpdateUserComment,
+    DeleteUserComment,
+    listCategory,
+    listPosts
 };

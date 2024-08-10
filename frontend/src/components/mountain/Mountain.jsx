@@ -2,13 +2,12 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { showMountain } from "../../services/api";
 import "../../style/mountain.css"
-import ModalShowInfotMountain from "./ModalInforMountain";
+import { Link } from "react-router-dom";
+
 const Mountain = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [listMountain, setlistMountain] = useState([]);
-  const [showInfor,setShowInfor]=useState(false);
-  const [dataInfor,setdataInfor]=useState({});
   useEffect(() => {
     getListMountain();
   }, [])
@@ -38,14 +37,7 @@ const Mountain = () => {
     );
   });
 
-  const handleshow=(mountain)=>{
-    // console.log(mountain);
-    setShowInfor(true);
-    setdataInfor(mountain);
-  }
-  const handleClose=()=>{
-    setShowInfor(false);
-  }
+
   return (
     <div className="container">
       <div className="row">
@@ -87,11 +79,12 @@ const Mountain = () => {
                     style={{ maxWidth: '100%', height: '25vh' }}
                   />
                   <h1 className="description">{mountain.name}</h1>
-                  <button className="btn btn-primary" onClick={()=>handleshow(mountain)}>Read more</button>
+                  <button className="btn btn-primary">
+                    <Link to={`/mountain/${mountain.id}`} className="text-white">Read more</Link>
+                  </button>
                 </div>
               </div>
             ))}
-            <ModalShowInfotMountain show={showInfor} handleClose={handleClose} dataInfor={dataInfor}></ModalShowInfotMountain>
           </div>
         </div>
       </div>

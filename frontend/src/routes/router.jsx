@@ -16,6 +16,8 @@ import Profile from '../components/User/Profile';
 import Footer from '../components/header_footer/Footer/Footer';
 import Dashboard from '../components/admin/Dashboard/Dashboard';
 import ContactUs from '../components/contact/ContactUs';
+import MountainDetails from '../components/mountain/MountainDetails';
+
 const RouterApp = () => {
   return (
     <>
@@ -25,6 +27,7 @@ const RouterApp = () => {
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/mountains" element={< Mountain />} />
+          <Route path="/mountain/:id" element={<MountainDetails />} />
           <Route path="/admin" element={<Admin />}>
             <Route index element={<Dashboard />} />
             <Route path="dashboard" element={<Dashboard />} />

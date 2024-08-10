@@ -31,6 +31,7 @@ const LoginForm = () => {
       }
     }
     setLoading(false);
+    console.log(password);
   };
 
 

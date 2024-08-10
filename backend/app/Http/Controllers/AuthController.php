@@ -18,7 +18,7 @@ class AuthController extends Controller
 
         $user = UserModel::where('username', $req->username)->first();
 
-        if (!$user || !Hash::check($req->password, $user->password_hash)) {
+        if (!$user || Hash::check($req->password, $user->password_hash)) {
             return response()->json([
                 'message' => 'The provided credentials are incorrect.',
             ], 401);

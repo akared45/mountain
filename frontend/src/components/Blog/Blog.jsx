@@ -1,76 +1,82 @@
-// src/pages/Blog.js
-import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Tab, Tabs, TabContainer, TabContent, TabPane, Nav, Container } from 'react-bootstrap';
-import PostForm from './PostForm';
-import '../../style/Blog.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Container, Row, Col, Card, Button, Tabs, Tab } from "react-bootstrap";
+import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { listCategory, listPosts } from "../../services/api";
 
 const Blog = () => {
-  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("History");
+  const [categories, setCategories] = useState([]);
+  const [posts, setPosts] = useState([]);
 
-  const handleOpenForm = () => {
-    setIsFormOpen(true);
-  };
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await listCategory();
+        setCategories(response.data.category);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+    
+    fetchCategories();
+  }, []);
 
-  const handleCloseForm = () => {
-    setIsFormOpen(false);
-  };
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await listPosts();
+        setPosts(response.data.blog);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
+    };
+
+    fetchPosts();
+  }, [activeTab]);
 
   return (
-    <Container>
-    <div className="blog-container">
-      <h1>Welcome to the Blog</h1>
-      
-      <div className="tabs-container mt-3">
-            <TabContainer defaultActiveKey="history">
-              <div className="d-flex">
-                <Nav variant="tabs" className="flex-column nav-tabs-custom">
-                  <Nav.Item>
-                    <Nav.Link eventKey="history" ><p className='Left'>History</p></Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey="types"><p className='Left'>Typed/Styles</p></Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey="techniques"><p className='Left'>Techniques</p></Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey="shelltering"><p className='Left'>Shelltering</p></Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey="hazards"><p className='Left'>Hazards</p></Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey="stories"><p className='Left'>Story</p></Nav.Link>
-                  </Nav.Item>
-                </Nav>
-                <TabContent className="tab-content-custom">
-                  <TabPane eventKey="history">
-                    <p>Content for History tab.</p>
-                  </TabPane>
-                  <TabPane eventKey="types">
-                    <p>Content for Typed/Styles tab.</p>
-                  </TabPane>
-                  <TabPane eventKey="techniques">
-                    <p>Content for Techniques</p>
-                  </TabPane>
-                  <TabPane eventKey="shelltering">
-                    <p>Content for Shelltering</p>
-                  </TabPane>
-                  <TabPane eventKey="hazards">
-                    <p>Content for Hazards tab.</p>
-                  </TabPane>
-                  <TabPane eventKey="stories">
-                    <button className="open-form-button" onClick={handleOpenForm}>
-                      Đăng bài
-                    </button>
-                  </TabPane>
-                </TabContent>
-              </div>
-            </TabContainer>
+    <Container className="py-5">
+      <Row>
+        <Col md={8} className="mx-auto">
+          <Tabs
+            id="controlled-tab-example"
+            activeKey={activeTab}
+            onSelect={(k) => setActiveTab(k)}
+            className="mb-4"
+            variant="pills"
+          >
+            {categories.map((category) => (
+              <Tab key={category} eventKey={category} title={category}>
+                {posts.filter(post => post.category === category).map(post => (
+                  <Card key={post.id} className="mb-4 shadow-sm">
+                    <Card.Body>
+                      <Card.Title>{post.title}</Card.Title>
+                      <Card.Subtitle className="mb-2 text-muted">
+                        {new Date(post.created_at).toLocaleDateString()}
+                      </Card.Subtitle>
+                      <Card.Text>{post.content}</Card.Text>
+                    </Card.Body>
+                    <div className="text-end m-2">
+                      <Button variant="outline-primary">Read More</Button>
+                    </div>
+                  </Card>
+                ))}
+              </Tab>
+            ))}
+          </Tabs>
+          <div className="d-flex justify-content-between mt-4">
+            <Button variant="outline-secondary">
+              <FontAwesomeIcon icon={faChevronLeft} /> Previous Page
+            </Button>
+            <Button variant="outline-secondary">
+              Next Page <FontAwesomeIcon icon={faChevronRight} />
+            </Button>
           </div>
-      {isFormOpen && <PostForm onClose={handleCloseForm} />}
-    </div>
+        </Col>
+      </Row>
     </Container>
   );
 };

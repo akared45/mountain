@@ -45,7 +45,6 @@
     background-color: #f8f9fa;
     border-radius: 5px;
     padding: 15px;
-    margin-bottom: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -92,4 +91,23 @@
     100% {
         transform: scale(1);
     }
+}
+.feedback-container {
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.feedback-container.hidden {
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+}
+.comments-container {
+    transition: flex 0.5s ease;
+}
+.col-comments.full-width {
+    flex: 1;
+    transition: flex 0.5s ease;
+}
+.feedback-title.hidden {
+    opacity: 0;
+    transition: opacity 0.5s ease;
 }

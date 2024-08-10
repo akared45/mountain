@@ -53,7 +53,7 @@ const ModalUpdate = ({ show, handleClose, dataMountain , setListMountain}) => {
     
     return (
         <>
-            <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
+            <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} size="lg">
                 <Modal.Header closeButton>
                     <Modal.Title>Edit Mountain</Modal.Title>
                 </Modal.Header>

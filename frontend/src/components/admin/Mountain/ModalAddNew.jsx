@@ -1,6 +1,8 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useState } from 'react';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { addMountain, showMountain } from '../../../services/api';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,6 +15,7 @@ import {
   countryRegex,
   regionRegex
 } from '../../../ultils/regex';
+
 const ModalAddNew = ({ show, handleClose, setListMountain }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -120,37 +123,94 @@ const ModalAddNew = ({ show, handleClose, setListMountain }) => {
           <form>
             <div className="form-group">
               <label htmlFor="mountainName">Tên Núi</label>
-              <input type="text" className="form-control" id="mountainName" placeholder="Nhập tên núi" value={name} onChange={(e) => setName(e.target.value)} required />
+              <CKEditor
+                editor={ClassicEditor}
+                data={name}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+                  setName(data);
+                }}
+              />
               {errors.name && <span className="text-danger">{errors.name}</span>}
             </div>
             <div className="form-group">
               <label htmlFor="description">Mô Tả</label>
-              <textarea className="form-control" id="description" placeholder="Nhập mô tả" value={description} onChange={(e) => setDescription(e.target.value)} required></textarea>
+              <CKEditor
+                editor={ClassicEditor}
+                data={description}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+                  setDescription(data);
+                }}
+              />
               {errors.description && <span className="text-danger">{errors.description}</span>}
             </div>
-            <div className="form-group">
-              <label htmlFor="latitude">Vĩ Độ</label>
-              <input type="text" className="form-control" id="latitude" placeholder="Nhập vĩ độ" value={latitude} onChange={(e) => setLatitude(e.target.value)} required />
-              {errors.latitude && <span className="text-danger">{errors.latitude}</span>}
-            </div>
-            <div className="form-group">
-              <label htmlFor="longitude">Kinh Độ</label>
-              <input type="text" className="form-control" id="longitude" placeholder="Nhập kinh độ" value={longitude} onChange={(e) => setLongitude(e.target.value)} required />
-              {errors.longitude && <span className="text-danger">{errors.longitude}</span>}
-            </div>
-            <div className="form-group">
-              <label htmlFor="altitude">Độ Cao</label>
-              <input type="number" className="form-control" id="altitude" placeholder="Nhập độ cao" step="any" value={altitude} onChange={(e) => setAltitude(e.target.value)} required />
-              {errors.altitude && <span className="text-danger">{errors.altitude}</span>}
+            <div className="row">
+              <div className="col-md-4">
+                <div className="form-group">
+                  <label htmlFor="latitude">Vĩ Độ</label>
+                  <CKEditor
+                    editor={ClassicEditor}
+                    data={latitude}
+                    onChange={(event, editor) => {
+                      const data = editor.getData();
+                      setLatitude(data);
+                    }}
+                  />
+                  {errors.latitude && <span className="text-danger">{errors.latitude}</span>}
+                </div>
+              </div>
+              <div className="col-md-4">
+                <div className="form-group">
+                  <label htmlFor="longitude">Kinh Độ</label>
+                  <CKEditor
+                    editor={ClassicEditor}
+                    data={longitude}
+                    onChange={(event, editor) => {
+                      const data = editor.getData();
+                      setLongitude(data);
+                    }}
+                  />
+                  {errors.longitude && <span className="text-danger">{errors.longitude}</span>}
+                </div>
+              </div>
+              <div className="col-md-4">
+                <div className="form-group">
+                  <label htmlFor="altitude">Độ Cao</label>
+                  <CKEditor
+                    editor={ClassicEditor}
+                    data={altitude}
+                    onChange={(event, editor) => {
+                      const data = editor.getData();
+                      setAltitude(data);
+                    }}
+                  />
+                  {errors.altitude && <span className="text-danger">{errors.altitude}</span>}
+                </div>
+              </div>
             </div>
             <div className="form-group">
               <label htmlFor="country">Quốc Gia</label>
-              <input type="text" className="form-control" id="country" placeholder="Nhập quốc gia" value={country} onChange={(e) => setCountry(e.target.value)} required />
+              <CKEditor
+                editor={ClassicEditor}
+                data={country}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+                  setCountry(data);
+                }}
+              />
               {errors.country && <span className="text-danger">{errors.country}</span>}
             </div>
             <div className="form-group">
               <label htmlFor="region">Khu Vực</label>
-              <input type="text" className="form-control" id="region" placeholder="Nhập khu vực" value={region} onChange={(e) => setRegion(e.target.value)} required />
+              <CKEditor
+                editor={ClassicEditor}
+                data={region}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+                  setRegion(data);
+                }}
+              />
               {errors.region && <span className="text-danger">{errors.region}</span>}
             </div>
             <div className="form-group">

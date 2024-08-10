@@ -36,13 +36,17 @@ class CommentController extends Controller
                 'groupcomments.rating',
                 'groupcomments.created_at',
                 'commenters.username as commenter_name',
-                'commenters.img'
+                'commenters.img',
+                'commenters.id as commenter_id',
+                'groupcomments.id as comment_id'
             )
             ->where('groupcomments.group_id', $id)
+            ->orderBy('groupcomments.rating', 'desc')
             ->get();
 
         return response()->json(['comments' => $comments]);
     }
+
     public function postComment($userid, $groupid, Request $request)
     {
 
@@ -77,7 +81,73 @@ class CommentController extends Controller
                 'groupcomments.created_at',
                 DB::raw('COALESCE(AVG(groupcomments.rating), 0) as average_rating')
             )
-            ->groupBy('groups.id', 'groups.name', 'groups.description', 'groups.image', 'leaders.username','groupcomments.created_at')
+            ->groupBy('groups.id', 'groups.name', 'groups.description', 'groups.image', 'leaders.username', 'groupcomments.created_at')
+            ->get();
+
+        return response()->json(['groups' => $groups]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'content' => 'required|string|max:255',
+            'rating' => 'required',
+        ]);
+
+        $comment = DB::table('groupcomments')->where('id', $id)->first();
+
+        if (!$comment) {
+            return response()->json(['message' => 'Comment not found'], 404);
+        }
+
+        DB::table('groupcomments')
+            ->where('id', $id)
+            ->update([
+                'content' => $request->input('content'),
+                'rating' => $request->input('rating'),
+                'updated_at' => now(),
+            ]);
+
+        $groups = DB::table('groups')
+            ->leftJoin('groupcomments', 'groupcomments.group_id', '=', 'groups.id')
+            ->leftJoin('users as leaders', 'leaders.id', '=', 'groups.leader_id')
+            ->select(
+                'groups.id',
+                'groups.name',
+                'groups.description',
+                'groups.image',
+                'leaders.username as leader_name',
+                DB::raw('COALESCE(AVG(groupcomments.rating), 0) as average_rating')
+            )
+            ->groupBy('groups.id', 'groups.name', 'groups.description', 'groups.image', 'leaders.username')
+            ->get();
+
+        return response()->json([
+            'message' => 'Comment updated successfully',
+            'groups' => $groups
+        ]);
+    }
+
+    public function delete($id)
+    {
+        $deleted = DB::table('groupcomments')->where('id', $id)->delete();
+
+        if (!$deleted) {
+            return response()->json(['message' => 'Comment not found'], 404);
+        }
+
+        $groups = DB::table('groups')
+            ->leftJoin('groupcomments', 'groupcomments.group_id', '=', 'groups.id')
+            ->leftJoin('users as leaders', 'leaders.id', '=', 'groups.leader_id')
+            ->select(
+                'groups.id',
+                'groups.name',
+                'groups.description',
+                'groups.image',
+                'leaders.username as leader_name',
+                DB::raw('COALESCE(AVG(groupcomments.rating), 0) as average_rating')
+            )
+            ->groupBy('groups.id', 'groups.name', 'groups.description', 'groups.image', 'leaders.username')
             ->get();
 
         return response()->json(['groups' => $groups]);
