@@ -1,0 +1,23 @@
+.admin-blog-page h1 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.blog-table th,
+.blog-table td {
+  vertical-align: middle;
+}
+
+.text-end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.post-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 10px;
+}

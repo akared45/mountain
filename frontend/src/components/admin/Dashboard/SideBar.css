@@ -1,0 +1,11 @@
+.no-border .accordion-item {
+    border: none; /* Remove border */
+  }
+  
+  .no-border .accordion-header {
+    border: none; /* Remove border from header */
+  }
+  
+  .no-border .accordion-body {
+    border: none; /* Remove border from body */
+  }

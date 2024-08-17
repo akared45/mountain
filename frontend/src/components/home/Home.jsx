@@ -5,7 +5,8 @@ import i2 from "../../assets/images/denali.png";
 import i3 from "../../assets/images/hima.png";
 import im1 from "../../assets/images/i1.png";
 import im2 from "../../assets/images/i2.png";
-
+import { pageview } from "../../services/api";
+import { Link } from 'react-router-dom';
 const images = [i1, i2, i3];
 
 const Home = () => {
@@ -17,7 +18,21 @@ const Home = () => {
     }, 2000); 
     return () => clearInterval(intervalId);
   }, []);
-
+  const token = localStorage.getItem('token');
+    useEffect(() => {
+        const recordVisit = async () => {
+          if (!localStorage.getItem('page_visited')) {
+            try {
+              const response = await pageview(token);
+              console.log('Page view recorded:', response);
+              localStorage.setItem('page_visited', 'true');
+            } catch (error) {
+              console.error('Error recording visit:', error);
+            }
+          }
+        };
+        recordVisit();
+      }, [token]);
   return (
     <>
       <div className="home-container">
@@ -72,7 +87,7 @@ const Home = () => {
                     country cuisine, our blog probes the depths of the world of
                     mountaineering.
                   </p>
-                  <button className="btn btn-light">Alpine Ascents Blog</button>
+                  <Link to="/blog" className="btn btn-light">Alpine Ascents Blog</Link>
                 </div>
               </div>
             </div>
@@ -83,7 +98,7 @@ const Home = () => {
                   <p>
                     Named one of "The Best Adventure Travel Companies on Earth" by National Geographic Adventure Magazine. Alpine Ascents was selected by The New York Times as the chosen Kilimanjaro Guide Service.
                   </p>
-                  <button className="btn btn-light hover">More from the Media</button>
+                  <Link to="/about" className="btn btn-light">About Us</Link>
                 </div>
               </div>
               <div className="col-md-4 mb-4">

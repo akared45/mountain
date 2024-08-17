@@ -1,43 +1,22 @@
-.tabs-container {
-    margin-top: 20px;
-  }
-
-  .nav-tabs .nav-item {
-    margin-right: 79px;
-    margin-bottom: 20px;
-  }
-.Left{
-    text-align: left !important;
+.tab-content .nav-pills .nav-link {
+  transition: background-color 0.3s, color 0.3s;
 }
-  
-  .nav-tabs .nav-item:last-child {
-    margin-right: 0;
-  }
-  
-  /* Animation cho các tab pane */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  
-  .tab-pane-animation {
-    animation: fadeIn 0.5s ease-in-out;
-  }
-  
-  /* Màu nền và màu chữ mặc định cho các tab */
-  .nav-tabs .nav-link {
-    background-color: #ffffff; /* Màu nền đen */
-    color: #313131; /* Màu chữ trắng */
-    transition: all 0.3s ease;
-  }
-  
-  /* Hiệu ứng hover cho các tab */
-  .nav-tabs .nav-link:hover {
-    background-color: #454545; /* Chuyển màu nền sang trắng khi hover */
-    color: #ffffff; /* Chuyển màu chữ sang đen khi hover */
-    transform: scale(1.1);
-  }
+
+.tab-content .nav-pills .nav-link:hover {
+  color: #fff;
+  border-radius: 0.25rem;
+}
+
+.profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+a {
+  text-decoration: none;
+}
+/* .py-5{
+  background-image: url(../assets/images/acon.png);
+} */

@@ -102,18 +102,6 @@ const TableGroup = () => {
             <ModalAddNew show={showModalAddNew} handleClose={handleClose} setListMountain={setListMountain} />
             <ModalDelete show={showModalDelete} handleClose={handleClose} dataMountainDelete={dataMountainDelete} setListMountain={setListMountain}/>
             <ModalUpdate show={showModalEdit} handleClose={handleClose} dataMountain={dataMountainEdit} setListMountain={setListMountain}/>
-            <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="colored"
-            />
         </>
 
     )

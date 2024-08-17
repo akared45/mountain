@@ -41,7 +41,7 @@ const MapComponent = ({ dataInfor }) => {
     // Add a marker for the specified coordinates
     new mapboxgl.Marker()
       .setLngLat([dataInfor.longitude, dataInfor.latitude])
-      .setPopup(new mapboxgl.Popup().setText('Mount Everest'))
+      .setPopup(new mapboxgl.Popup().setText(`${dataInfor.name}`))
       .addTo(map);
 
     // Clean up map instance on component unmount

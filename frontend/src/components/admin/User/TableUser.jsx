@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { changeRole, ListUser } from '../../../services/api';
+import { ListUser } from '../../../services/api';
 import ModalChangeRole from './ModalChangeRole';
 
 const TableUser = () => {
     const [users, setUsers] = useState([]);
+    const [selectedUser, setSelectedUser] = useState(null);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         fetchUsers();
     }, []);
+
     const fetchUsers = async () => {
         try {
             const response = await ListUser();
@@ -16,6 +19,19 @@ const TableUser = () => {
             console.error('Error fetching users:', error);
         }
     };
+
+    const handleShowModal = (user) => {
+        setSelectedUser(user);
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setSelectedUser(null);
+    };
+
+   
+    console.log(selectedUser)
     return (
         <div className="container">
             <h2>User List</h2>
@@ -36,12 +52,11 @@ const TableUser = () => {
                 </thead>
                 <tbody>
                     {users.map((user, index) => (
-                        <tr key={index}>
+                        <tr key={user.id}>
                             <td>{index + 1}</td>
                             <td>{user.username}</td>
                             <td>{user.full_name}</td>
                             <td>{user.email}</td>
-
                             <td>{user.gender}</td>
                             <td>
                                 {user.img ? (
@@ -54,13 +69,25 @@ const TableUser = () => {
                             <td>{user.dob}</td>
                             <td>{user.role}</td>
                             <td>
-                                <button className="btn btn-primary">Change Role</button>
+                                <button
+                                    className="btn btn-primary"
+                                    onClick={() => handleShowModal(user)}
+                                >
+                                    Change Role
+                                </button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
-                <ModalChangeRole users={users}/>
             </table>
+            {selectedUser && (
+                <ModalChangeRole
+                    show={showModal}
+                    handleClose={handleCloseModal}
+                    user={selectedUser}
+                    setUsers={setUsers}
+                />
+            )}
         </div>
     );
 };

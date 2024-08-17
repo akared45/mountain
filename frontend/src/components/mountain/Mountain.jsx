@@ -16,10 +16,8 @@ const Mountain = () => {
     let res = await showMountain();
     if (res && res.data) {
       setlistMountain(res.data.ListMountain);
-
     }
   }
-  console.log(listMountain);
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);

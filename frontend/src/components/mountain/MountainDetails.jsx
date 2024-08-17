@@ -4,8 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useParams } from "react-router-dom";
 import { showMountain } from "../../services/api";
 import MapComponent from './map';
-import './MountainDetails.css'; // Add custom CSS file for additional styling
-
+import './MountainDetails.css'; 
+    
 const MountainDetails = () => {
     const { id } = useParams();
     const [mountain, setMountain] = useState(null);

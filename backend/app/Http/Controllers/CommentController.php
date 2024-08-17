@@ -152,4 +152,33 @@ class CommentController extends Controller
 
         return response()->json(['groups' => $groups]);
     }
+    public function showcomment()
+    {
+        $comments = DB::table('groupcomments')
+            ->leftJoin('groups', 'groupcomments.group_id', '=', 'groups.id')
+            ->leftJoin('users as leaders', 'leaders.id', '=', 'groups.leader_id')
+            ->select(
+                'groupcomments.id as comment_id',
+                'groupcomments.content',
+                'groupcomments.rating',
+                'groupcomments.created_at',
+                'groupcomments.updated_at',
+                'groups.name as group_name',
+                'leaders.username'
+            )
+            ->get();
+
+        return response()->json(['comment' => $comments]);
+    }
+    public function deletecomment($id)
+    {
+        $deleted = DB::table('groupcomments')
+            ->where('id', $id)
+            ->delete();
+        if ($deleted) {
+            return response()->json(['message' => 'Bình luận đã được xóa thành công.'], 200);
+        } else {
+            return response()->json(['message' => 'Không tìm thấy bình luận.'], 404);
+        }
+    }
 }

@@ -1,7 +1,8 @@
 import React from "react";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { NavLink } from "react-router-dom";
-
+import { Accordion, Card } from 'react-bootstrap';
+import './SideBar.css';
 const SideBar = () => {
   return (
     <div className="bg-white sidebar">
@@ -14,8 +15,7 @@ const SideBar = () => {
         <NavLink
           to="/admin/dashboard"
           className={({ isActive }) =>
-            `list-group-item list-group-item-action my-2 ${isActive ? "active" : ""
-            }`
+            `list-group-item list-group-item-action my-2 ${isActive ? "active" : ""}`
           }
         >
           <i className="bi bi-speedometer2 fs-5 me-3"></i>
@@ -24,8 +24,7 @@ const SideBar = () => {
         <NavLink
           to="/admin/mountain"
           className={({ isActive }) =>
-            `list-group-item list-group-item-action my-2 ${isActive ? "active" : ""
-            }`
+            `list-group-item list-group-item-action my-2 ${isActive ? "active" : ""}`
           }
         >
           <i className="bi-geo-alt fs-4 me-3"></i>
@@ -34,24 +33,48 @@ const SideBar = () => {
         <NavLink
           to="/admin/group"
           className={({ isActive }) =>
-            `list-group-item list-group-item-action my-2 ${isActive ? "active" : ""
-            }`
+            `list-group-item list-group-item-action my-2 ${isActive ? "active" : ""}`
           }
         >
           <i className="bi-people fs-4 me-3"></i>
           <span>Group</span>
         </NavLink>
+
+        <Accordion defaultActiveKey="" className="no-border">
+          <Accordion.Item eventKey="0">
+            <Accordion.Header>
+              <i className="bi-person fs-4 me-3"></i> User
+            </Accordion.Header>
+            <Accordion.Body>
+              <NavLink
+                to="/admin/user/role"
+                className={({ isActive }) =>
+                  `list-group-item list-group-item-action ${isActive ? "active" : ""}`
+                }
+              >
+                Role
+              </NavLink>
+              <NavLink
+                to="/admin/user/comment"
+                className={({ isActive }) =>
+                  `list-group-item list-group-item-action  ${isActive ? "active" : ""}`
+                }
+              >
+                Comment
+              </NavLink>
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
+
         <NavLink
-          to="/admin/user"
+          to="/admin/blog"
           className={({ isActive }) =>
-            `list-group-item list-group-item-action my-2 ${isActive ? "active" : ""
-            }`
+            `list-group-item list-group-item-action my-2 ${isActive ? "active" : ""}`
           }
         >
-          <i className="bi-person fs-4 me-3"></i>
-          <span>User</span>
+          <i className="bi-pencil-square fs-4 me-3"></i>
+          <span>Blog</span>
         </NavLink>
-
       </div>
     </div>
   );

@@ -1,0 +1,37 @@
+/* BlogDetail.css */
+
+.blog-card {
+  margin-bottom: 20px;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+}
+
+.blog-card:hover {
+  transform: scale(1.02);
+}
+
+.author-img {
+  width: 40px; 
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.related-posts-card {
+  margin-top: 20px;
+}
+
+.related-post-link {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.related-post-link:hover {
+  text-decoration: underline;
+}
+
+.animate__animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}

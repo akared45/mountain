@@ -31,4 +31,18 @@ class UserController extends Controller
             return response()->json(['message' => 'User not found or role not changed'], 404);
         }
     }
+    public function showrole()
+    {
+
+        $enumValues = DB::select("SHOW COLUMNS FROM users WHERE Field = 'role'");
+
+        $enumList = [];
+        if (isset($enumValues[0])) {
+            $enumString = $enumValues[0]->Type;
+            preg_match_all("/'([^']+)'/", $enumString, $matches);
+            $enumList = $matches[1];
+        }
+
+        return response()->json(['role' => $enumList]);
+    }
 }

@@ -5,31 +5,30 @@ import { Outlet, useNavigate } from "react-router-dom";
 import Nav from "./Nav";
 import { toast } from "react-toastify";
 import { InforUser } from "../../../services/api";
+import { Navigate } from 'react-router-dom';
 
 const Admin = () => {
     const [toggle, setToggle] = useState(true);
-    const [userRole, setUserRole] = useState("");
+    const [userRole, setUserRole] = useState(null); 
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
-
     const Toggle = () => {
         setToggle(prevToggle => !prevToggle);
-    }
+    };
 
     useEffect(() => {
         const fetchUserInfo = async () => {
-            if (token) {
-                try {
-                    const response = await InforUser(token);
-                    setUserRole(response.data.role);
-                } catch (error) {
-                    console.error('Failed to fetch user info:', error);
-                    toast.error('Failed to fetch user info.');
-                }
+            try {
+                const response = await InforUser(token);
+                setUserRole(response.data.role);
+            } catch (error) {
+                console.error('Failed to fetch user info:', error);
+                toast.error('Failed to fetch user info.');
+                navigate('/login'); 
             }
         };
         fetchUserInfo();
-    }, [token]);
+    }, [token, navigate]);
 
     useEffect(() => {
         if (userRole && userRole !== 'admin') {
@@ -37,6 +36,10 @@ const Admin = () => {
             navigate("/");
         }
     }, [userRole, navigate]);
+
+    if (userRole === null) {
+        return <div>Loading...</div>; 
+    }
 
     return (
         <div className="container-fluid bg-white min-vh-100">

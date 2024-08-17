@@ -9,7 +9,6 @@ import { InforUser } from "../../../services/api";
 const Header = () => {
   const navigate = useNavigate();
   const [userRole, setUserRole] = useState(null);
-  const [username, setUserName] = useState(null);
   const [avatarUrl, setAvatarUrl] = useState(null);
   const token = localStorage.getItem("token");
 
@@ -18,10 +17,8 @@ const Header = () => {
       const fetchUserInfo = async () => {
         try {
           const response = await InforUser(token);
-          setUserName(response.data.username);
           setUserRole(response.data.role);
           setAvatarUrl(response.data.img);
-          
         } catch (error) {
           console.error('Failed to fetch user info:', error);
           toast.error('Failed to fetch user info.');
@@ -33,6 +30,7 @@ const Header = () => {
   }, [token]);
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("page_visited");
     navigate("/");
     toast.success("Log out success");
   };
@@ -54,9 +52,10 @@ const Header = () => {
           <Navbar.Collapse>
             <Nav>
               <Nav.Link as={Link} to="/">Home</Nav.Link>
-              <Nav.Link as={Link} to="/mountains">Mountaineering</Nav.Link>
+              <Nav.Link as={Link} to="/mountains">Mountain</Nav.Link>
               <Nav.Link as={Link} to="/group">Group</Nav.Link>
               <Nav.Link as={Link} to="/blog">Blog</Nav.Link>
+              <Nav.Link as={Link} to="/story">Story</Nav.Link>
               <Nav.Link as={Link} to="/about">About Us</Nav.Link>
               <Nav.Link as={Link} to="/contact">Contact</Nav.Link>
             </Nav>

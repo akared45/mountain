@@ -13,12 +13,12 @@ class AuthController extends Controller
     {
         $req->validate([
             'username' => 'required',
-            'password_hash' => 'required',
+            'password' => 'required',
         ]);
 
         $user = UserModel::where('username', $req->username)->first();
 
-        if (!$user || Hash::check($req->password, $user->password_hash)) {
+        if (!$user || !Hash::check($req->password, $user->password_hash)) {
             return response()->json([
                 'message' => 'The provided credentials are incorrect.',
             ], 401);
@@ -58,14 +58,14 @@ class AuthController extends Controller
             'username' => 'required',
             'email' => 'required',
             'full_name' => 'required',
-            'password_hash' => 'required',
+            'password' => 'required',
         ]);
 
-        $password_hash = Hash::make($validatedData['password_hash']);
+        $password = Hash::make($validatedData['password']);
 
         $user = UserModel::create([
             'username' => $validatedData['username'],
-            'password_hash' => $password_hash,
+            'password_hash' => $password,
             'full_name' => $validatedData['full_name'],
             'email' => $validatedData['email'],
             'role' => 'user',
@@ -130,10 +130,10 @@ class AuthController extends Controller
         if (!$newPassword) {
             return response()->json(['message' => 'New password is required.'], 400);
         }
-
+        $hashedPassword = Hash::make($newPassword);
         DB::table('users')
             ->where('id', $id)
-            ->update(['password_hash' => $newPassword]);
+            ->update(['password_hash' => $hashedPassword]);
 
         return response()->json(['message' => 'Password updated successfully.']);
     }

@@ -47,16 +47,19 @@ const updateMountain = (id, name, description, latitude, longitude, altitude, co
 const ListUser = () => {
     return axios.get('users');
 }
-const changeRole = (id, role) => {
-    return axios.post('updateRole',
-        role
-    )
+const role = () => {
+    return axios.get('/user/role')
 }
-const Login = (username, password_hash) => {
-    return axios.post('login', {
-        username,
-        password_hash
+const changeRole = (id, role) => {
+    return axios.post(`user/role/${id}`, {
+        role
     })
+}
+const Login = (username, password) => {
+    return axios.post('/login', {
+        username,
+        password
+    });
 }
 
 const InforUser = (token) => {
@@ -66,10 +69,10 @@ const InforUser = (token) => {
         },
     });
 };
-const Register = (username, password_hash, full_name, email) => {
+const Register = (username, password, full_name, email) => {
     return axios.post('register', {
         username,
-        password_hash,
+        password,
         full_name,
         email
     })
@@ -129,6 +132,71 @@ const listCategory = () => {
 const listPosts = () => {
     return axios.get('blog')
 }
+const AddPost = (title, content, category, author_id) => {
+    return axios.post('blog/add', {
+        title,
+        content,
+        category,
+        author_id
+    })
+}
+const updatePost = (id, title, content, category) => {
+    return axios.post(`/blog/update/${id}`, {
+        title,
+        content,
+        category
+    });
+};
+const deletePost = (id) => {
+    return axios.delete(`/blog/delete/${id}`);
+};
+const postcategory = () => {
+    return axios.get('/post-category-analytics');
+}
+const commentGroup = () => {
+    return axios.get('/comment-counts');
+}
+const pageview = (token) => {
+    return axios.get('/record-visit', {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+}
+const totalvisit = () => {
+    return axios.get('/totalvisit');
+}
+const showcomment = () => {
+    return axios.get('/comments');
+}
+const deletecomment = (id) => {
+    return axios.delete(`/comments/${id}`);
+}
+const showStory = () => {
+    return axios.get('/story')
+}
+const createStory = (title, content, author_id, location_id, image) => {
+    let formData = new FormData();
+    formData.append('title', title);
+    formData.append('content', content);
+    formData.append('author_id', author_id);
+    formData.append('location_id', location_id);
+    if (image) {
+        formData.append('image', image);
+    }
+    return axios.post(`/story/add`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    });
+}
+const contact = (user_id, contact_phone, message) => {
+    return axios.post('/contact/send', {
+        user_id,
+        contact_phone,
+        message
+    });
+}
 export {
     showMountain,
     addMountain,
@@ -141,6 +209,7 @@ export {
     changePass,
     count,
     ListUser,
+    role,
     changeRole,
     ListGroups,
     GroupComment,
@@ -148,5 +217,17 @@ export {
     UpdateUserComment,
     DeleteUserComment,
     listCategory,
-    listPosts
+    listPosts,
+    AddPost,
+    updatePost,
+    deletePost,
+    postcategory,
+    commentGroup,
+    pageview,
+    totalvisit,
+    showcomment,
+    deletecomment,
+    showStory,
+    createStory,
+    contact
 };

@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import RouterApp from './routes/router';
 import { ToastContainer } from 'react-toastify';

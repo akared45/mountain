@@ -17,6 +17,10 @@ import Footer from '../components/header_footer/Footer/Footer';
 import Dashboard from '../components/admin/Dashboard/Dashboard';
 import ContactUs from '../components/contact/ContactUs';
 import MountainDetails from '../components/mountain/MountainDetails';
+import TableBlog from '../components/admin/Blog/TableBlog';
+import BlogDetail from '../components/Blog/BlogDetail';
+import TableComment from '../components/admin/User/TableComment';
+import Story from '../components/story/Story';
 
 const RouterApp = () => {
   return (
@@ -31,11 +35,15 @@ const RouterApp = () => {
           <Route path="/admin" element={<Admin />}>
             <Route index element={<Dashboard />} />
             <Route path="dashboard" element={<Dashboard />} />
-            <Route path="user" element={<TableUser />} />
+            <Route path="user/role" element={<TableUser />} />
+            <Route path="user/comment" element={<TableComment />} />
             <Route path="mountain" element={<TableMountain />} />
             <Route path="group" element={<TableGroup />} />
+            <Route path="blog" element={<TableBlog />} />
           </Route>
           <Route path="/blog" element={<Blog />} />
+          <Route path="/story" element={<Story />} />
+          <Route path="/blog/:id" element={<BlogDetail />} />
           <Route path="/group" element={<Group />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />
@@ -44,7 +52,7 @@ const RouterApp = () => {
           <Route path="/contact" element={<ContactUs />} />
           <Route path="*" element={<Notfound />} />
         </Routes>
-        <Footer />
+        <Footer/>
       </BrowserRouter>
     </>
   );

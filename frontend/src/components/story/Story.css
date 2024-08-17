@@ -1,0 +1,6 @@
+/* src/Story.css */
+.card-img {
+    max-height: 200px; /* Điều chỉnh chiều cao tối đa của hình ảnh */
+    object-fit: cover; /* Đảm bảo hình ảnh không bị biến dạng */
+  }
+  

@@ -75,7 +75,7 @@ const CommentsSection = ({ comments, userId, setComment, setGroups, setFeedbackS
                             <Col md={2} className="text-center">
                                 <Image
                                     className="comment-avatar"
-                                    src={`http://localhost:8000/storage/images/${comment.img}`}
+                                    src={comment.img ?`http://localhost:8000/storage/images/${comment.img}`: 'http://localhost:8000/storage/images/avtdefault.jpg'}
                                     alt="User Avatar"
                                     roundedCircle
                                     fluid
